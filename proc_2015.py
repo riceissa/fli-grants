@@ -8,7 +8,8 @@ def main():
         soup = BeautifulSoup(f, "lxml")
         project_grants, center_grants, conference_grants = soup.find_all("table")
 
-        print("""insert into donations (donor, donee, amount, donation_date,
+        print("""insert into donations (donor, donee, donation_earmark,
+        amount, donation_date,
         donation_date_precision, donation_date_basis, cause_area, url,
         donor_cause_area_url, notes, affected_countries, affected_states,
         affected_cities, affected_regions) values""")
@@ -42,6 +43,7 @@ def print_table_info(table, grants_type, first_group=False):
         print(("    " if first else "    ,") + "(" + ",".join([
             mysql_quote("Future of Life Institute"),  # donor
             mysql_quote(institution),  # donee
+            mysql_quote(investigator),  # donation_earmark
             str(amount),  # amount
             # The donation date is from
             # https://timelines.issarice.com/wiki/Timeline_of_AI_safety
@@ -52,7 +54,7 @@ def print_table_info(table, grants_type, first_group=False):
             mysql_quote("AI risk"),  # cause_area
             mysql_quote(url),  # url
             mysql_quote(""),  # donor_cause_area_url
-            mysql_quote(("A {} to support the work of {}. "
+            mysql_quote(("A {}. "
                          "Project title: {}.").format(grants_type,
                                                       investigator,
                                                       project)),  # notes
