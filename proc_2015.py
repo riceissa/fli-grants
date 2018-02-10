@@ -43,6 +43,9 @@ def print_table_info(table, grants_type, first_group=False):
             mysql_quote("Future of Life Institute"),  # donor
             mysql_quote(institution),  # donee
             str(amount),  # amount
+            # The donation date is from
+            # https://timelines.issarice.com/wiki/Timeline_of_AI_safety
+            # (see the event for July 1, 2015).
             mysql_quote("2015-09-01"),  # donation_date
             mysql_quote("day"),  # donation_date_precision
             mysql_quote("donation log"),  # donation_date_basis
