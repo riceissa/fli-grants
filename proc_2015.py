@@ -3,6 +3,7 @@
 
 from bs4 import BeautifulSoup
 
+
 def main():
     with open("2015-grants.html", "r") as f:
         soup = BeautifulSoup(f, "lxml")
@@ -36,6 +37,9 @@ def print_table_info(table, grants_type, first_group=False):
         amount = cells[2].text.strip()
         assert amount.startswith("$"), amount
         amount = float(amount.replace("$", "").replace(",", ""))
+
+        if investigator == "Katja Grace":
+            institution = "AI Impacts"
 
         # cell[3] exists but contains the investigator email, which we
         # don't care about
