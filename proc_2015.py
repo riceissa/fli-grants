@@ -25,7 +25,7 @@ def main():
 def print_table_info(table, grants_type, first_group=False):
     """Find and return the fields we care about for the given table."""
     first = first_group
-    
+
     for tr in table.find_all("tr"):
         cells = tr.find_all("td")
         if cells[0].text.strip() == "Primary Investigator":
