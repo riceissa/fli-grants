@@ -5,9 +5,9 @@ from bs4 import BeautifulSoup
 
 
 def main():
-    with open("2015-grants.html", "r") as f:
+    with open("2018-grants.html", "r") as f:
         soup = BeautifulSoup(f, "lxml")
-        project_grants, center_grants, conference_grants = soup.find_all("table")
+        project_grants = soup.find("table")
 
         print("""insert into donations (donor, donee, donation_earmark,
         amount, donation_date,
@@ -16,16 +16,13 @@ def main():
         affected_cities, affected_regions) values""")
 
         print_table_info(project_grants, "project grant", True)
-        print_table_info(center_grants, "center grant")
-        print_table_info(conference_grants, "conference and education grant")
-
         print(";")
 
 
 def print_table_info(table, grants_type, first_group=False):
     """Find and return the fields we care about for the given table."""
     first = first_group
-
+    
     for tr in table.find_all("tr"):
         cells = tr.find_all("td")
         if cells[0].text.strip() == "Primary Investigator":
@@ -52,7 +49,7 @@ def print_table_info(table, grants_type, first_group=False):
             # The donation date is from
             # https://timelines.issarice.com/wiki/Timeline_of_AI_safety
             # (see the event for July 1, 2015).
-            mysql_quote("2015-09-01"),  # donation_date
+            mysql_quote("2018-09-01"),  # donation_date
             mysql_quote("day"),  # donation_date_precision
             mysql_quote("donation log"),  # donation_date_basis
             mysql_quote("AI safety"),  # cause_area
